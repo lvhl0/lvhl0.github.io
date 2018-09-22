@@ -229,6 +229,134 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/22/helloword/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/22/helloword/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-22T19:09:33+08:00">
+                2018-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>title: liferay源码添加自己的方法<br>date: 2018-09-22 19:09:33<br>tags:</p>
+<p>1、去掉Liferay中的“您的请求已成功完成”<br>Liferay中有些请求的情况下会出现一个“您的请求已成功完成”，这样的提示，如下图。这个本来是一个好东西，能够让用户知道请求是成功完成了，但是有时候Liferay这个默认的提示为影响我们的版面，下面是提供两种去掉的方法。</p>
+<p>方法一：<br>在相应的portlet.xml文件里面的相应portlet下面添加如下的配置：</p>
+<p><init-param></init-param></p>
+<p><name>add-process-action-success-action</name></p>
+<p><value>false</value><br><br>注：比如有10个portlet，这个信息要添加10次，麻烦了一点，但是有一个好处是可以为第一个portlet自定义，如果有某一个portlet还需要这样的提示，不添加即可。<br>方法二：<br>这是一种简单粗暴的方法，查看一下这个提示的HTML代码，发现他的class=portlet-msg-success，所以可以在主题里面将这个内容使用CSS给隐藏掉，添加一个CSS语句：<br>.portlet-msg-success{<br>       display:none;<br>}<br>推荐使用方法一，这种是liferay提供的，方法二虽然简单，但是粗暴，这是因为有些情况下我们还是希望看到这个提示，或者是我们使用了liferay的这个提示添加了一些自定义的信息，如果是使用了方法二，这些自定义的提示信息也看不到了。</p>
+<p> 2、Liferay中让portlet不显示边框<br>在很多的应用场景下我们不希望显示portlet的边框，要去掉Portlet边框大概有以下三种方法：<br>一、手动设置<br>在Portlet的右上角，点击设置–外观和风格–是否显示边框，配置成不显示。<br>适用范围：<br>此方法适用于，当一个页面中只有几个Portlet需要调整边框的时候。<br>二、在Portlet的配置文件中<br>在portlet.xml中中添加以下配置文件，将此信息添加相要默认不显示边框的portlet里面。</p>
+<p><portlet-preferences><br>    <preference><br>        <name>portletSetupShowBorders</name><br>        <value>false</value><br>    </preference><br></portlet-preferences><br>适用范围：<br>此方法适用于，让portlet添加到页中就不显示边框。当然也可以通过方法1的配置，让他再显示边框。<br>三、通过主题控制<br>我们可以在主题里面添加一个配置，让我们在主题里面来配置是否显示边框。<br>在主题的liferay-look-and-feel.xml文件里面，在theme的标签里面添加配置settings，达到类似如下的效果:</p>
+<p><theme id="themexx" name="ThemeXX"><br>          <settings><br>             <setting configurable="true" key="portlet-setup-show-borders-default" type="checkbox" value="false"></setting><br>             </settings><br></theme><br>上面的配置可以让我们在主题里面控制当前主题范围内容的Portlet是否显示边框。<br>适用范围：<br>此方法适用于我们要批量的调整Portlet的边框，如一个站点、一个页面中的所有Portlet等。<br>总结<br>不过在实际的开发中，我们一般是结合方法1和方法3使用。方法2只是针对特殊的情况，Portlet默认加载的时候是显示边框的（如果在方法3里面配置了不显示边框，此时也不显示），如果想要portlet在被添加到页面时就不显示边框，则使用方法2。<br>方法1和方法2的原理是一样的，最终都是将这个状态保存到数据库的portletpreferences表里面。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/22/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -390,7 +518,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
