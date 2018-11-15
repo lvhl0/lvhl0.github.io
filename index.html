@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/修改liferay源码/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/liferay常见设置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/15/修改liferay源码/" itemprop="url">Untitled</a></h1>
+                <a class="post-title-link" href="/2018/11/15/liferay常见设置/" itemprop="url">liferay 常用配置</a></h1>
         
 
         <div class="post-meta">
@@ -260,7 +260,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-15T22:37:21+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-15T23:17:32+08:00">
                 2018-11-15
               </time>
             
@@ -300,7 +300,24 @@
       
         
           
-            <h2 id="liferay-修改源码"><a href="#liferay-修改源码" class="headerlink" title="liferay 修改源码"></a>liferay 修改源码</h2><hr>
+            <h3 id="一、去掉Liferay中的“您的请求已成功完成”"><a href="#一、去掉Liferay中的“您的请求已成功完成”" class="headerlink" title="一、去掉Liferay中的“您的请求已成功完成”"></a>一、去掉Liferay中的“您的请求已成功完成”</h3><p>&#160; &#160; &#160; &#160;Liferay中有些请求的情况下会出现一个“您的请求已成功完成”，这样的提示，如下图。这个本来是一个好东西，能够让用户知道请求是成功完成了，但是有时候Liferay这个默认的提示为影响我们的版面，下面是提供两种去掉的方法。</p>
+<p>方法一：在相应的portlet.xml文件里面的相应portlet下面添加如下的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;init-param&gt;</span><br><span class="line">    &lt;name&gt;add-process-action-success-action&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">&lt;/init-param&gt;</span><br></pre></td></tr></table></figure></p>
+<p>&#160; &#160; &#160; &#160;注：比如有10个portlet，这个信息要添加10次，麻烦了一点，但是有一个好处是可以为第一个portlet自定义，如果有某一个portlet还需要这样的提示，不添加即可。</p>
+<p>方法二：这是一种简单粗暴的方法，查看一下这个提示的HTML代码，发现他的class=portlet-msg-success，所以可以在主题里面将这个内容使用CSS给隐藏掉，添加一个CSS语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.portlet-msg-success&#123;</span><br><span class="line">    display:none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&#160; &#160; &#160; &#160;推荐使用方法一，这种是liferay提供的，方法二虽然简单，但是粗暴，这是因为有些情况下我们还是希望看到这个提示，或者是我们使用了liferay的这个提示添加了一些自定义的信息，如果是使用了方法二，这些自定义的提示信息也看不到了。</p>
+<h3 id="二、Liferay中让portlet不显示边框"><a href="#二、Liferay中让portlet不显示边框" class="headerlink" title="二、Liferay中让portlet不显示边框"></a>二、Liferay中让portlet不显示边框</h3><p>&#160; &#160; &#160; &#160;在很多的应用场景下我们不希望显示portlet的边框，要去掉Portlet边框大概有以下三种方法：</p>
+<p>1.手动设置</p>
+<p>&#160; &#160; &#160; &#160;在Portlet的右上角，点击设置–外观和风格–是否显示边框，配置成不显示。</p>
+<p>适用范围：</p>
+<p>&#160; &#160; &#160; &#160;此方法适用于，当一个页面中只有几个Portlet需要调整边框的时候。</p>
+<p>2.在Portlet的配置文件中</p>
+<p>在portlet.xml中中添加以下配置文件，将此信息添加相要默认不显示边框的portlet里面。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;portlet-preferences&gt;   </span><br><span class="line">    &lt;preference&gt;   </span><br><span class="line">        &lt;name&gt;portletSetupShowBorders&lt;/name&gt;   </span><br><span class="line">        &lt;value&gt;false&lt;/value&gt;   </span><br><span class="line">    &lt;/preference&gt;   </span><br><span class="line">&lt;/portlet-preferences&gt;</span><br></pre></td></tr></table></figure></p>
+<p>适用范围：此方法适用于，让portlet添加到页中就不显示边框。当然也可以通过方法1的配置，让他再显示边框。</p>
+<p>3.通过主题控制</p>
+<p>&#160; &#160; &#160; &#160;我们可以在主题里面添加一个配置，让我们在主题里面来配置是否显示边框。<br>在主题的liferay-look-and-feel.xml文件里面，在theme的标签里面添加配置settings，达到类似如下的效果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;theme id=&quot;themexx&quot; name=&quot;ThemeXX&quot; &gt;   </span><br><span class="line">    &lt;settings&gt;   </span><br><span class="line"> 	&lt;setting configurable=&quot;true&quot; key=&quot;portlet-setup-show-borders-default&quot; type=&quot;checkbox&quot; value=&quot;false&quot;&gt;&lt;/setting&gt;</span><br><span class="line">    &lt;/settings&gt;   </span><br><span class="line">&lt;/theme&gt;</span><br></pre></td></tr></table></figure></p>
+<p>上面的配置可以让我们在主题里面控制当前主题范围内容的Portlet是否显示边框。</p>
+<p>适用范围：</p>
+<p>&#160; &#160; &#160; &#160;此方法适用于我们要批量的调整Portlet的边框，如一个站点、一个页面中的所有Portlet等。<br>总结<br>不过在实际的开发中，我们一般是结合方法1和方法3使用。方法2只是针对特殊的情况，Portlet默认加载的时候是显示边框的（如果在方法3里面配置了不显示边框，此时也不显示），如果想要portlet在被添加到页面时就不显示边框，则使用方法2。<br>方法1和方法2的原理是一样的，最终都是将这个状态保存到数据库的portletpreferences表里面。</p>
 
           
         
@@ -349,7 +366,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/22/liferay常见设置/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/修改liferay源码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -368,7 +385,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/22/liferay常见设置/" itemprop="url">Untitled</a></h1>
+                <a class="post-title-link" href="/2018/11/15/修改liferay源码/" itemprop="url">Liferay 修改源码</a></h1>
         
 
         <div class="post-meta">
@@ -380,8 +397,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-22T19:09:33+08:00">
-                2018-09-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-15T23:17:32+08:00">
+                2018-11-15
               </time>
             
 
@@ -420,25 +437,7 @@
       
         
           
-            <h2 id="liferay-常用配置"><a href="#liferay-常用配置" class="headerlink" title="liferay 常用配置"></a>liferay 常用配置</h2><hr>
-<h3 id="一、去掉Liferay中的“您的请求已成功完成”"><a href="#一、去掉Liferay中的“您的请求已成功完成”" class="headerlink" title="一、去掉Liferay中的“您的请求已成功完成”"></a>一、去掉Liferay中的“您的请求已成功完成”</h3><p>&#160; &#160; &#160; &#160;Liferay中有些请求的情况下会出现一个“您的请求已成功完成”，这样的提示，如下图。这个本来是一个好东西，能够让用户知道请求是成功完成了，但是有时候Liferay这个默认的提示为影响我们的版面，下面是提供两种去掉的方法。</p>
-<p>方法一：在相应的portlet.xml文件里面的相应portlet下面添加如下的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;init-param&gt;</span><br><span class="line">    &lt;name&gt;add-process-action-success-action&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">&lt;/init-param&gt;</span><br></pre></td></tr></table></figure></p>
-<p>&#160; &#160; &#160; &#160;注：比如有10个portlet，这个信息要添加10次，麻烦了一点，但是有一个好处是可以为第一个portlet自定义，如果有某一个portlet还需要这样的提示，不添加即可。</p>
-<p>方法二：这是一种简单粗暴的方法，查看一下这个提示的HTML代码，发现他的class=portlet-msg-success，所以可以在主题里面将这个内容使用CSS给隐藏掉，添加一个CSS语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.portlet-msg-success&#123;</span><br><span class="line">    display:none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>&#160; &#160; &#160; &#160;推荐使用方法一，这种是liferay提供的，方法二虽然简单，但是粗暴，这是因为有些情况下我们还是希望看到这个提示，或者是我们使用了liferay的这个提示添加了一些自定义的信息，如果是使用了方法二，这些自定义的提示信息也看不到了。</p>
-<h3 id="二、Liferay中让portlet不显示边框"><a href="#二、Liferay中让portlet不显示边框" class="headerlink" title="二、Liferay中让portlet不显示边框"></a>二、Liferay中让portlet不显示边框</h3><p>&#160; &#160; &#160; &#160;在很多的应用场景下我们不希望显示portlet的边框，要去掉Portlet边框大概有以下三种方法：</p>
-<p>1.手动设置</p>
-<p>&#160; &#160; &#160; &#160;在Portlet的右上角，点击设置–外观和风格–是否显示边框，配置成不显示。</p>
-<p>适用范围：</p>
-<p>&#160; &#160; &#160; &#160;此方法适用于，当一个页面中只有几个Portlet需要调整边框的时候。</p>
-<p>2.在Portlet的配置文件中</p>
-<p>在portlet.xml中中添加以下配置文件，将此信息添加相要默认不显示边框的portlet里面。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;portlet-preferences&gt;   </span><br><span class="line">    &lt;preference&gt;   </span><br><span class="line">        &lt;name&gt;portletSetupShowBorders&lt;/name&gt;   </span><br><span class="line">        &lt;value&gt;false&lt;/value&gt;   </span><br><span class="line">    &lt;/preference&gt;   </span><br><span class="line">&lt;/portlet-preferences&gt;</span><br></pre></td></tr></table></figure></p>
-<p>适用范围：此方法适用于，让portlet添加到页中就不显示边框。当然也可以通过方法1的配置，让他再显示边框。</p>
-<p>3.通过主题控制</p>
-<p>&#160; &#160; &#160; &#160;我们可以在主题里面添加一个配置，让我们在主题里面来配置是否显示边框。<br>在主题的liferay-look-and-feel.xml文件里面，在theme的标签里面添加配置settings，达到类似如下的效果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;theme id=&quot;themexx&quot; name=&quot;ThemeXX&quot; &gt;   </span><br><span class="line">    &lt;settings&gt;   </span><br><span class="line"> 	&lt;setting configurable=&quot;true&quot; key=&quot;portlet-setup-show-borders-default&quot; type=&quot;checkbox&quot; value=&quot;false&quot;&gt;&lt;/setting&gt;</span><br><span class="line">    &lt;/settings&gt;   </span><br><span class="line">&lt;/theme&gt;</span><br></pre></td></tr></table></figure></p>
-<p>上面的配置可以让我们在主题里面控制当前主题范围内容的Portlet是否显示边框。</p>
-<p>适用范围：</p>
-<p>&#160; &#160; &#160; &#160;此方法适用于我们要批量的调整Portlet的边框，如一个站点、一个页面中的所有Portlet等。<br>总结<br>不过在实际的开发中，我们一般是结合方法1和方法3使用。方法2只是针对特殊的情况，Portlet默认加载的时候是显示边框的（如果在方法3里面配置了不显示边框，此时也不显示），如果想要portlet在被添加到页面时就不显示边框，则使用方法2。<br>方法1和方法2的原理是一样的，最终都是将这个状态保存到数据库的portletpreferences表里面。</p>
+            <h2 id="Liferay-修改源码"><a href="#Liferay-修改源码" class="headerlink" title="Liferay 修改源码"></a><strong>Liferay 修改源码</strong></h2><hr>
 
           
         
